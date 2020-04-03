@@ -21,6 +21,8 @@ docker tag "$IMAGE_NAME:latest" "$IMAGE_NAME:$CIRCLECI_TAG"
 docker tag "$IMAGE_NAME:latest" "$IMAGE_NAME:$GAUGE_TAG"
 docker tag "$IMAGE_NAME:latest" "$IMAGE_NAME:$GIT_TAG"
 docker tag "$IMAGE_NAME:latest" "$IMAGE_NAME:$NODE_TAG"
+echo "Created the following tags:"
+docker images "$IMAGE_NAME" --format="{{ .Tag }}" | tee -a  "/tmp/tags"
 if [ "${CIRCLE_BRANCH}" == "master" ]; then
       docker push "$IMAGE_NAME"
 fi
