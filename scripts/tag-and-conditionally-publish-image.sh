@@ -25,4 +25,5 @@ echo "Created the following tags:"
 docker images "$IMAGE_NAME" --format="{{ .Tag }}" | tee -a  "/tmp/tags"
 if [ "${CIRCLE_BRANCH}" == "master" ]; then
       docker push "$IMAGE_NAME"
+      docker images "$IMAGE_NAME" --format="{{ .Digest }}" | tee -a  "/tmp/digest"
 fi

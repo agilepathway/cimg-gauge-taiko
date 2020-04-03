@@ -53,3 +53,6 @@ jobs:
       - store_artifacts:
           path: /tmp/tags
           destination: docker/tags
+      - store_artifacts:
+          path: /tmp/digest
+          destination: docker/digest
