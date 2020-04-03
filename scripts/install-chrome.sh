@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2002
 
 # taken from https://github.com/CircleCI-Public/browser-tools-orb/blob/master/src/commands/install-chrome.yml
 
