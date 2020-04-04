@@ -9,22 +9,45 @@ executors:
       IMAGE_NAME: agilepathway/cimg-gauge
     docker:
       - image: circleci/buildpack-deps:stretch
+  go:
+    docker:
+      - image: cimg/go:1.14
 
 workflows:
   version: 2
   build-tags:
     jobs:
       - shellcheck/check
-      - build-image
+      - compile-mage-scripts
+      - build-image:
+          requires:
+            - compile-mage-scripts
       - tag-and-conditionally-publish-image:
           requires:
             - build-image
             
 jobs:
+  compile-mage-scripts:
+    working_directory: ~/agile-pathway-co-uk
+    executor: go
+    steps:
+      - checkout
+      - run:
+          name: Install Mage
+          command: ./scripts/install-mage.sh
+      - run:
+          name: Install check Gauge Version executable
+          command: cd go-scripts/src && mage -compile ../bin/check-gauge-version -goos linux -goarch amd64
+      - persist_to_workspace:
+          root: .
+          paths:
+            - go-scripts/bin/*
   build-image:
     executor: docker-publisher
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       - setup_remote_docker
       - run:
           name: Build Docker image
