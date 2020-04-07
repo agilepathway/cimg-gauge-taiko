@@ -37,7 +37,7 @@ jobs:
           command: ./scripts/install-mage.sh
       - run:
           name: Install check Gauge Version executable
-          command: cd go-scripts/src && mage -compile ../bin/check-gauge-version -goos linux -goarch amd64
+          command: cd go-scripts/src && mage -compile ../bin/gauge-version -goos linux -goarch amd64
       - persist_to_workspace:
           root: .
           paths:
