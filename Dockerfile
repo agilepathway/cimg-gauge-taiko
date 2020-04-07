@@ -11,11 +11,11 @@ RUN    chmod 755 /usr/local/bin/install-mage.sh \
     && chmod 755 /usr/local/bin/install-gauge.sh \
     && chmod 755 /usr/local/bin/install-gauge-plugins.sh \
     && chmod 755 /usr/local/bin/install-taiko.sh \
-    && chmod 755 /usr/local/bin/check-gauge-version \
+    && chmod 755 /usr/local/bin/gauge-version \
     && install-chrome.sh \
     && install-gauge.sh
 USER circleci
 RUN    install-gauge-plugins.sh \
     && install-taiko.sh \
-    && check-gauge-version \
+    && gauge-version \
     && install-mage.sh
