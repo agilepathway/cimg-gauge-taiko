@@ -5,9 +5,9 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os/exec"
 	"regexp"
+
+	"github.com/magefile/mage/sh"
 )
 
 const expectedGaugeVersion string = "1.0.8"
@@ -20,7 +20,11 @@ var Default = CheckGaugeVersion
 func CheckGaugeVersion() error {
 	fmt.Println("Checking Gauge version ...")
 
-	verboseGaugeVersion := execCommand("/usr/local/bin/gauge", "--version")
+	verboseGaugeVersion, err := sh.Output("/usr/local/bin/gauge", "--version")
+	if err != nil {
+		return err
+	}
+
 	gaugeVersion := findGaugeVersion(verboseGaugeVersion)
 
 	if gaugeVersion == expectedGaugeVersion {
@@ -34,14 +38,4 @@ func CheckGaugeVersion() error {
 func findGaugeVersion(verboseGaugeVersion string) string {
 	gaugeRegex := regexp.MustCompile(`Gauge version: (\d+(.\d+)?(.\d+)?)`)
 	return gaugeRegex.FindStringSubmatch(verboseGaugeVersion)[1]
-}
-
-// Wrapper for https://pkg.go.dev/os/exec#Command
-func execCommand(name string, arg ...string) string {
-	stdout, err := exec.Command(name, arg...).Output()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return string(stdout)
 }
