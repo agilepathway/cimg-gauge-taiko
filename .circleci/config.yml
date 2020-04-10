@@ -2,29 +2,27 @@ version: 2.1
 
 orbs:
   shellcheck: circleci/shellcheck@1.3.15
+  docker: agilepathway/docker@0.5.0
 
 executors:
-  docker-publisher:
-    environment:
-      IMAGE_NAME: agilepathway/cimg-gauge
-    docker:
-      - image: circleci/buildpack-deps:stretch
   go:
     docker:
       - image: cimg/go:1.14
 
 workflows:
   version: 2
-  build-tags:
+  build-and-publish-docker-image:
     jobs:
       - shellcheck/check
       - compile-mage-scripts
-      - build-image:
+      - docker/publish:
           requires:
             - compile-mage-scripts
-      - tag-and-conditionally-publish-image:
-          requires:
-            - build-image
+          after_checkout:
+            - attach_workspace:
+                at: .
+          tag_after_deploy: $(./scripts/after-deploy-tags.sh)
+
             
 jobs:
   compile-mage-scripts:
@@ -42,40 +40,3 @@ jobs:
           root: .
           paths:
             - go-scripts/bin/*
-  build-image:
-    executor: docker-publisher
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - setup_remote_docker
-      - run:
-          name: Build Docker image
-          command: |
-            docker build -t $IMAGE_NAME:latest .
-      - run:
-          name: Archive Docker image
-          command: docker save -o image.tar $IMAGE_NAME
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./image.tar
-  tag-and-conditionally-publish-image:
-    executor: docker-publisher
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - setup_remote_docker
-      - run:
-          name: Load archived Docker image
-          command: docker load -i /tmp/workspace/image.tar
-      - run:
-          name: Publish Docker Image to Docker Hub
-          command: ./scripts/tag-and-conditionally-publish-image.sh
-      - store_artifacts:
-          path: /tmp/tags
-          destination: docker/tags
-      - store_artifacts:
-          path: /tmp/digest
-          destination: docker/digest
