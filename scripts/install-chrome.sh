@@ -73,6 +73,7 @@ else
     libdbus-1-3 \
     libgdk-pixbuf2.0-0 \
     libglib2.0-0 \
+    libgbm1 \
     libgtk-3-0 \
     libnspr4 \
     libnss3 \
