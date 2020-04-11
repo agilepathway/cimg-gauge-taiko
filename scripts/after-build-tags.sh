@@ -9,7 +9,7 @@ CIRCLECI_TAG="CIRCLECI-${CIRCLE_BUILD_NUM}"
 GAUGE_VERSION=$(docker run --rm -i "$IMAGE_NAME" bash -c 'echo "$(gauge-version)"')
 GAUGE_TAG="GAUGE-$GAUGE_VERSION"
 
-NODE_VERSION=13.12
+NODE_VERSION=$(docker run --rm -i "$IMAGE_NAME" bash -c 'echo "$(node --version)"')
 NODE_TAG="NODE-${NODE_VERSION}"
 
 # Use Gauge version as the semantic version of the image, as this is a Gauge image and
