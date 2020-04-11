@@ -39,6 +39,9 @@ jobs:
       - run:
           name: Install get Go version executable
           command: cd go-scripts/src/go_version && mage -compile ../../bin/go-version -goos linux -goarch amd64
+      - run:
+          name: Install get Taiko version executable
+          command: cd go-scripts/src/taiko_version && mage -compile ../../bin/taiko-version -goos linux -goarch amd64
       - persist_to_workspace:
           root: .
           paths:
