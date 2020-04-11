@@ -9,6 +9,9 @@ CIRCLECI_TAG="CIRCLECI-${CIRCLE_BUILD_NUM}"
 GAUGE_VERSION=$(docker run --rm -i "$IMAGE_NAME" bash -c 'echo "$(gauge-version)"')
 GAUGE_TAG="GAUGE-$GAUGE_VERSION"
 
+GO_VERSION=$(docker run --rm -i "$IMAGE_NAME" bash -c 'echo "$(go-version)"')
+GO_TAG="GO-$GO_VERSION"
+
 NODE_VERSION=$(docker run --rm -i "$IMAGE_NAME" bash -c 'echo "$(node --version)"')
 NODE_TAG="NODE-${NODE_VERSION}"
 
@@ -17,4 +20,4 @@ NODE_TAG="NODE-${NODE_VERSION}"
 # for their base images: https://circleci.com/docs/2.0/circleci-images/#best-practices
 # Also tag the Gauge version and the circle build together so that consumers can pin to an 
 # idempotent image
-echo "$GAUGE_VERSION","$GAUGE_VERSION"-"$CIRCLECI_TAG","$GAUGE_TAG","$CHROME_TAG","$CIRCLECI_TAG","$NODE_TAG"
+echo "$GAUGE_VERSION","$GAUGE_VERSION"-"$CIRCLECI_TAG","$GAUGE_TAG","$GO_TAG","$CHROME_TAG","$CIRCLECI_TAG","$NODE_TAG"

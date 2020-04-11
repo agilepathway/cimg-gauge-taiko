@@ -33,8 +33,11 @@ jobs:
           name: Install Mage
           command: ./scripts/install-mage.sh
       - run:
-          name: Install check Gauge Version executable
-          command: cd go-scripts/src && mage -compile ../bin/gauge-version -goos linux -goarch amd64
+          name: Install get Gauge version executable
+          command: cd go-scripts/src/gauge_version && mage -compile ../../bin/gauge-version -goos linux -goarch amd64
+      - run:
+          name: Install get Go version executable
+          command: cd go-scripts/src/go_version && mage -compile ../../bin/go-version -goos linux -goarch amd64
       - persist_to_workspace:
           root: .
           paths:
