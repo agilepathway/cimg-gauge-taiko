@@ -10,7 +10,6 @@ executors:
       - image: cimg/go:1.14
 
 workflows:
-  version: 2
   build-and-publish-docker-image:
     jobs:
       - shellcheck/check
