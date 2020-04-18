@@ -21,7 +21,8 @@ workflows:
           after_checkout:
             - attach_workspace:
                 at: .
-          tag_after_build: $(./scripts/after-build-tags.sh)
+            - run: sudo cp -r go-scripts/bin/* /usr/local/bin/
+          tag_after_build: $(docker-tags -v)
 
             
 jobs:
@@ -34,14 +35,8 @@ jobs:
           name: Install Mage
           command: ./scripts/install-mage.sh
       - run:
-          name: Install get Gauge version executable
-          command: cd go-scripts/src/gauge_version && mage -compile ../../bin/gauge-version -goos linux -goarch amd64
-      - run:
-          name: Install get Go version executable
-          command: cd go-scripts/src/go_version && mage -compile ../../bin/go-version -goos linux -goarch amd64
-      - run:
-          name: Install get Taiko version executable
-          command: cd go-scripts/src/taiko_version && mage -compile ../../bin/taiko-version -goos linux -goarch amd64
+          name: Install docker-tags executable
+          command: mage -compile go-scripts/bin/docker-tags -goos linux -goarch amd64
       - persist_to_workspace:
           root: .
           paths:
