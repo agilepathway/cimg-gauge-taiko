@@ -13,6 +13,7 @@ workflows:
   build-and-publish-docker-image:
     jobs:
       - shellcheck/check
+      - go-test
       - compile-mage-scripts
       - docker/hadolint
       - docker/publish:
@@ -26,6 +27,23 @@ workflows:
 
             
 jobs:
+
+  go-test:
+    working_directory: ~/agile-pathway-co-uk
+    executor: go
+    steps:
+      - checkout
+      - run:
+          name: Run Go tests
+          environment:
+            INTEGRATION_TEST: "true"
+          command: ./scripts/run-go-tests.sh
+      - store_test_results:
+          path: /tmp/test-reports/go/junit/
+      - store_artifacts:
+          path: /tmp/test-reports/go/html/
+          destination: test-reports
+
   compile-mage-scripts:
     working_directory: ~/agile-pathway-co-uk
     executor: go
