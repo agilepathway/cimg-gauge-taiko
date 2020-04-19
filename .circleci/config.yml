@@ -24,6 +24,15 @@ workflows:
                 at: .
             - run: sudo cp -r go-scripts/bin/* /usr/local/bin/
           tag_after_build: $(docker-tags -v)
+  release:
+    jobs:
+      - release:
+          # Only run on git tag pushes
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*(-.*)*/
 
             
 jobs:
@@ -59,3 +68,10 @@ jobs:
           root: .
           paths:
             - go-scripts/bin/*
+
+  release:
+    docker:
+      - image: circleci/golang:1.14
+    steps:
+      - checkout
+      - run: curl -sL https://git.io/goreleaser | bash
