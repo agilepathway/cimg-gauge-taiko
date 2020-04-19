@@ -1,0 +1,7 @@
+project_name: cimg-gauge
+build:
+  skip: true
+release:
+  github:
+  prerelease: auto
+  
