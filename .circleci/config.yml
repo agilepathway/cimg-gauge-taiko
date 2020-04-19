@@ -24,8 +24,6 @@ workflows:
                 at: .
             - run: sudo cp -r go-scripts/bin/* /usr/local/bin/
           tag_after_build: $(docker-tags -v)
-  release:
-    jobs:
       - release:
           # Only run on git tag pushes
           filters:
