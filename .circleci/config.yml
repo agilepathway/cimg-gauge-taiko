@@ -13,6 +13,7 @@ workflows:
   build-and-publish-docker-image:
     jobs:
       - shellcheck/check
+      - go-test
       - compile-mage-scripts
       - docker/hadolint
       - docker/publish:
@@ -21,10 +22,28 @@ workflows:
           after_checkout:
             - attach_workspace:
                 at: .
-          tag_after_build: $(./scripts/after-build-tags.sh)
+            - run: sudo cp -r go-scripts/bin/* /usr/local/bin/
+          tag_after_build: $(docker-tags -v)
 
             
 jobs:
+
+  go-test:
+    working_directory: ~/agile-pathway-co-uk
+    executor: go
+    steps:
+      - checkout
+      - run:
+          name: Run Go tests
+          environment:
+            INTEGRATION_TEST: "true"
+          command: ./scripts/run-go-tests.sh
+      - store_test_results:
+          path: /tmp/test-reports/go/junit/
+      - store_artifacts:
+          path: /tmp/test-reports/go/html/
+          destination: test-reports
+
   compile-mage-scripts:
     working_directory: ~/agile-pathway-co-uk
     executor: go
@@ -34,14 +53,8 @@ jobs:
           name: Install Mage
           command: ./scripts/install-mage.sh
       - run:
-          name: Install get Gauge version executable
-          command: cd go-scripts/src/gauge_version && mage -compile ../../bin/gauge-version -goos linux -goarch amd64
-      - run:
-          name: Install get Go version executable
-          command: cd go-scripts/src/go_version && mage -compile ../../bin/go-version -goos linux -goarch amd64
-      - run:
-          name: Install get Taiko version executable
-          command: cd go-scripts/src/taiko_version && mage -compile ../../bin/taiko-version -goos linux -goarch amd64
+          name: Install docker-tags executable
+          command: mage -compile go-scripts/bin/docker-tags -goos linux -goarch amd64
       - persist_to_workspace:
           root: .
           paths:
