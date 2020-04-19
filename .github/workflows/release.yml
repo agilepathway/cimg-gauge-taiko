@@ -1,0 +1,19 @@
+# .github/workflows/release.yml
+name: Tag
+
+on:
+  pull_request:
+    types: 
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tag 
+        uses: K-Phoen/semver-release-action@v1.2.0
+        with:
+          release_branch: master
+          release_strategy: tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
