@@ -4,4 +4,4 @@
 
 [![Built with Mage](https://magefile.org/badge.svg)](https://magefile.org)
 
-Unofficial [CircleCI](https://circleci.com/) (Ubuntu) Docker convenience [Gauge](https://gauge.org/) image
+Unofficial [CircleCI](https://circleci.com/) Docker convenience [Gauge](https://gauge.org/) image
