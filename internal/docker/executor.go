@@ -7,7 +7,7 @@ import (
 	"github.com/magefile/mage/sh"
 )
 
-func Execute(command string) string {
+func execute(command string) string {
 	imageName := os.Getenv("IMAGE_NAME")
 	commandOutput, error := sh.Output("docker", "run", "--rm", "-i", imageName, "bash", "-c", command)
 
