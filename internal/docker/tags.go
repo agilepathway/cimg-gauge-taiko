@@ -1,3 +1,6 @@
+// Package docker provides the versions of installed software on the docker image
+// in a docker tag friendly format.  This allows a mage command to expose them
+// for subsequent tagging on the Docker image.
 package docker
 
 import (
@@ -6,7 +9,7 @@ import (
 	"strings"
 )
 
-// Returns the Docker tags which should be added to the Docker image
+// Tags returns the Docker tags which the Docker image should then be tagged with
 func Tags() string {
 	tags := []string{gaugeVersion(), gaugeVersionAndCircleTag(), gaugeTag(), chromeTag(), goTag(), nodeTag(), taikoTag()}
 	return strings.Join(tags, ",")
@@ -20,10 +23,6 @@ func gaugeTag() string {
 	return fmt.Sprintf("GAUGE-%s", gaugeVersion())
 }
 
-func gaugeVersion() string {
-	return GaugeVersion.FindAndTrim()
-}
-
 func circleCIBuildTag() string {
 	return fmt.Sprintf("CIRCLECI-%s", circleCIBuildNumber())
 }
@@ -33,17 +32,17 @@ func circleCIBuildNumber() string {
 }
 
 func chromeTag() string {
-	return fmt.Sprintf("CHROME-%s", ChromeVersion.FindAndTrim())
+	return fmt.Sprintf("CHROME-%s", chromeVersion())
 }
 
 func goTag() string {
-	return fmt.Sprintf("GO-%s", GoVersion.FindAndTrim())
+	return fmt.Sprintf("GO-%s", goVersion())
 }
 
 func nodeTag() string {
-	return fmt.Sprintf("NODE-%s", NodeVersion.FindAndTrim())
+	return fmt.Sprintf("NODE-%s", nodeVersion())
 }
 
 func taikoTag() string {
-	return fmt.Sprintf("TAIKO-%s", TaikoVersion.FindAndTrim())
+	return fmt.Sprintf("TAIKO-%s", taikoVersion())
 }
