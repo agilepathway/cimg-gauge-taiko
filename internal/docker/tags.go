@@ -1,6 +1,12 @@
-// Package docker provides the versions of installed software on the docker image
-// in a docker tag friendly format.  This allows a mage command to expose them
-// for subsequent tagging on the Docker image.
+/*
+Package docker provides a lit of Docker tags for a given `agilepathway/cimg-gauge`
+docker image. This allows a mage command to expose this list of tags (e.g. in a CI build)
+for subsequent tagging of the image.
+
+The implementation is tightly coupled to the
+https://hub.docker.com/repository/docker/agilepathway/cimg-gauge
+Docker image, so is not suitable for general use.
+*/
 package docker
 
 import (
