@@ -4,6 +4,7 @@ on:
   pull_request:
 
 jobs:
+
   golangci-lint:
     name: runner / golangci-lint
     runs-on: ubuntu-latest
@@ -14,4 +15,16 @@ jobs:
           github_token: ${{ secrets.github_token }}
           golangci_lint_flags: "-c .golangci.yml"
           level: "error"
+          reporter: github-check
+
+  hadolint:
+    name: runner / hadolint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: hadolint
+        uses: reviewdog/action-hadolint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
           reporter: github-check
