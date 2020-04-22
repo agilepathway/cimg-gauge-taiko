@@ -1,7 +1,7 @@
 /*
-Package docker provides a lit of Docker tags for a given `agilepathway/cimg-gauge`
-docker image. This allows a mage command to expose this list of tags (e.g. in a CI build)
-for subsequent tagging of the image.
+Package docker provides a list of Docker tags for a given `agilepathway/cimg-gauge`
+docker image. This allows a mage command to expose this list of tags
+so that the image can then be tagged with them (e.g. by a CI build script).
 
 The implementation is tightly coupled to the
 https://hub.docker.com/repository/docker/agilepathway/cimg-gauge
@@ -15,7 +15,8 @@ import (
 	"strings"
 )
 
-// TagsForImage returns the list of Docker tags which the image should then be tagged with.
+// TagsForImage returns a list of Docker tag values for an image, which can then
+// be used (e.g. by a CI build script) to tag the image with them.
 // The list includes version numbers of the key software installed on the image.
 func TagsForImage(imageName string) string {
 	image := newImage(imageName)
