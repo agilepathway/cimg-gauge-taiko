@@ -8,7 +8,8 @@ import (
 )
 
 func TestTags(t *testing.T) {
-	checkDockerTags(t, []byte(Tags()))
+	actualTags := TagsForImage("TODO: more meaningful name")
+	checkDockerTags(t, []byte(actualTags))
 }
 
 func checkDockerTags(t *testing.T, actual []byte) {
