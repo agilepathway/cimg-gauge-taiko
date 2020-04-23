@@ -1,3 +1,4 @@
+---
 version: 2.1
 
 orbs:
@@ -29,7 +30,7 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*(-.*)*/
 
-            
+
 jobs:
 
   go-test:
@@ -58,7 +59,8 @@ jobs:
           command: ./scripts/install-mage.sh
       - run:
           name: Install docker-tags executable
-          command: mage -compile go-scripts/bin/docker-tags -goos linux -goarch amd64
+          command: |
+            mage -compile go-scripts/bin/docker-tags -goos linux -goarch amd64
       - persist_to_workspace:
           root: .
           paths:

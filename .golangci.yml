@@ -1,6 +1,8 @@
-# See all the configuration options that are available, 
+# See all the configuration options that are available,
 # along with their default values, at:
-# https://github.com/golangci/golangci-lint/blob/master/.golangci.example.yml 
+# https://github.com/golangci/golangci-lint/blob/master/.golangci.example.yml
+
+---
 issues:
   # Independently from option `exclude` we use default exclude patterns,
   # it can be disabled by this option. To list all
