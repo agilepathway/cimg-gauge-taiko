@@ -42,11 +42,11 @@ func (i image) gaugeVersionAndCircleTag() string {
 }
 
 func (i image) gaugeTag() string {
-	return fmt.Sprintf("GAUGE-%s", i.gaugeVersion)
+	return fmt.Sprintf("gauge-%s", i.gaugeVersion)
 }
 
 func (i image) circleCIBuildTag() string {
-	return fmt.Sprintf("CIRCLECI-%s", i.circleCIBuildNumber())
+	return fmt.Sprintf("circleci-%s", i.circleCIBuildNumber())
 }
 
 func (i image) circleCIBuildNumber() string {
@@ -54,17 +54,17 @@ func (i image) circleCIBuildNumber() string {
 }
 
 func (i image) chromeTag() string {
-	return fmt.Sprintf("CHROME-%s", i.chromeVersion)
+	return fmt.Sprintf("chrome-%s", i.chromeVersion)
 }
 
 func (i image) goTag() string {
-	return fmt.Sprintf("GO-%s", i.goVersion)
+	return fmt.Sprintf("go-%s", i.goVersion)
 }
 
 func (i image) nodeTag() string {
-	return fmt.Sprintf("NODE-%s", i.nodeVersion)
+	return fmt.Sprintf("node-%s", i.nodeVersion)
 }
 
 func (i image) taikoTag() string {
-	return fmt.Sprintf("TAIKO-%s", i.taikoVersion)
+	return fmt.Sprintf("taiko-%s", i.taikoVersion)
 }

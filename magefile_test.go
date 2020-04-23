@@ -24,7 +24,7 @@ func TestDockerTagsMageInvocation(t *testing.T) {
 }
 
 func checkDockerTags(t *testing.T, actual []byte) {
-	expectedFormat := `1\.0\.1,1\.0\.1-CIRCLECI-(\d+),GAUGE-1\.0\.1,CHROME-81\.0\.4044\.92,GO-1\.0\.2,NODE-1\.0\.3,TAIKO-1\.0\.4`
+	expectedFormat := `1\.0\.1,1\.0\.1-circleci-(\d+),gauge-1\.0\.1,chrome-81\.0\.4044\.92,go-1\.0\.2,node-1\.0\.3,taiko-1\.0\.4`
 	regex := regexp.MustCompile(expectedFormat)
 
 	if !regex.Match(actual) {
