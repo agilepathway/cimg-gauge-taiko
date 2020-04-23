@@ -66,3 +66,4 @@ jobs:
           reporter: github-check
           patterns: |
             **/*.md
+          language: en
