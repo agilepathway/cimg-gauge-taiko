@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  docker: agilepathway/docker@0.5.3
+  docker: agilepathway/docker@0.6.0
 
 executors:
   go:
