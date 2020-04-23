@@ -1,5 +1,6 @@
+---
 name: reviewdog
-on:
+on:  # yamllint disable-line rule:truthy
   push:
   pull_request:
 
@@ -67,3 +68,14 @@ jobs:
           patterns: |
             **/*.md
           language: en
+
+  yamllint:
+    name: runner / yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: yamllint
+        uses: reviewdog/action-yamllint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
