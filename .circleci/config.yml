@@ -21,7 +21,12 @@ workflows:
             - attach_workspace:
                 at: .
             - run: sudo cp -r go-scripts/bin/* /usr/local/bin/
-          tag_after_build: $(docker-tags -v)
+          after_build:
+            - run:
+                name: Evaluate and export docker after build tags
+                command: |
+                  echo "export AFTER_BUILD_TAGS=$(docker-tags -v)" >> $BASH_ENV
+          tag_after_build: $AFTER_BUILD_TAGS
       - release:
           # Only run on git tag pushes
           filters:
