@@ -26,7 +26,8 @@ workflows:
                 name: Evaluate and export docker after build tags
                 command: |
                   echo "export AFTER_BUILD_TAGS=$(docker-tags -v)" >> $BASH_ENV
-          tag_after_build: $AFTER_BUILD_TAGS
+          tag_after_build: |
+            $AFTER_BUILD_TAGS,circleci-pipeline-<< pipeline.number >>
       - release:
           # Only run on git tag pushes
           filters:
