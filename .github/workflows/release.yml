@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Tag
-        uses: K-Phoen/semver-release-action@v1.3.1
+        uses: K-Phoen/semver-release-action@v1.3.2
         with:
           release_branch: master
           release_strategy: tag
